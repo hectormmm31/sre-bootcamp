@@ -13,9 +13,6 @@ ENV FLASK_DEBUG=1
 # Expose the applications´s port
 EXPOSE 8000
 
-# Install dependencies for mysql connection
-RUN apk add --no-cache mariadb-dev build-base
-
 # Copy requirements
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
