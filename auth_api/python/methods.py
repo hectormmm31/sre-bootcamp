@@ -69,4 +69,28 @@ class Token:
 class Restricted:
 
     def access_data(self, authorization):
-        return 'test'
+        
+        secretKey   = 'my2w7wjd7yXF64FIADfJxNs1oupTGAuW'
+
+        # Checking if authorization token has Bearer string
+        if authorization.find("Bearer") >= 0:
+            tokenArray = authorization.split(" ")
+            auth_token = tokenArray[1]
+        else:
+            auth_token = authorization
+
+        try:
+            validate_token = jwt.decode(auth_token,
+                    secretKey, 
+                    algorithms=["HS256"]
+            )
+        except Exception as e:
+                    #return e
+                    return "Error Message: {}, status 400 Bad request".format(e)
+
+        if validate_token:
+            response = "You are under protected data"
+        else:
+            response = "You cannot access"
+        
+        return response
